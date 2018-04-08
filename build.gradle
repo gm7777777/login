@@ -1,0 +1,50 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.gm.web'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+
+ext {
+	springCloudVersion = 'Finchley.BUILD-SNAPSHOT'
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.cloud:spring-cloud-starter-oauth2')
+	compile('org.springframework.cloud:spring-cloud-starter-openfeign')
+	compile('org.springframework.cloud:spring-cloud-starter-security')
+	compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+
+			compile group: 'org.springframework.boot', name: 'spring-boot-starter-redis', version: '1.0.1.RELEASE'
+//	compile group: 'spring-cloud-cluster', name: 'spring-cloud-cluster', version: '1.0.2.RELEASE'
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
